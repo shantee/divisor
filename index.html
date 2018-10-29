@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>SUPER Divisor!</title>
+  <meta name="description" content="">
+  <script src="p5.min.js"></script>
+  <style>
+    .pixel {
+      float: left;
+      width: 4px;
+      height: 8px;
+      margin: 0px;
+      border: 0px;
+    }
+    textarea {
+      margin-top: 10px;
+      margin-left: 50px;
+      width: 500px;
+      height: 300px;
+      -moz-border-bottom-colors: none;
+      -moz-border-left-colors: none;
+      -moz-border-right-colors: none;
+      -moz-border-top-colors: none;
+      background: none repeat scroll 0 0 rgba(0, 0, 0, 0.07);
+      border-color: -moz-use-text-color #FFFFFF #FFFFFF -moz-use-text-color;
+      border-image: none;
+      border-radius: 6px 6px 6px 6px;
+      border-style: none solid solid none;
+      border-width: medium 1px 1px medium;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) inset;
+      color: #555555;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 1em;
+      line-height: 1.4em;
+      padding: 5px 8px;
+      transition: background-color 0.2s ease 0s;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <textarea id="res"></textarea>
+  <script>
+    var img, px, py, input;
+    var txtRes = document.getElementById('res');
+    function preload() {
+      img = loadImage('pic.png');
+    }
+    function setup() {
+      pixelDensity(1);
+      px = img.width;
+      py = img.height;
+      createCanvas(px, py);
+
+      noLoop();
+    }
+    function resDiv(s) {
+      var div = document.createElement('div');
+      div.id = "image";
+      div.innerHTML = "";
+      div.style.width = s + 'px';
+      document.body.append(div);
+      return div;
+    }
+    function getPix() {
+      for (var y = 0; y < img.height; y++) {
+        for (var x = 0; x < img.width; x++) {
+          var pd = (img.get(x, y));
+          var pd1 = (img.get(x+1, y+1));
+          var pd2 = (img.get(x+2, y+2));
+          var pd2 = (img.get(x+3, y+3));
+
+          var r = (pd[0]);
+          var g =(pd1[0]);
+          var b =(pd2[0]);
+          resul += '<div class="pixel" style="background-color:rgb('+r+','+g+','+b+')"></div>\n';
+        }
+      }
+      return resul;
+    }
+    var resul = "";
+    function draw() {
+      image(img, 0, 0);
+      var divImage = resDiv(px * 4);
+      var fin = getPix();
+      txtRes.value += fin;
+      divImage.innerHTML = fin;
+      noLoop();
+    }
+  </script>
+</body>
+</html>
